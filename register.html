@@ -59,6 +59,7 @@
                 .then((userCredential) => {
                     // Successfully created user
                     console.log(userCredential);
+                    window.location.href = "login.html";
                 })
                 .catch((error) => {
                     document.getElementById("errorMessage").textContent = 'This email has already been accessed';
