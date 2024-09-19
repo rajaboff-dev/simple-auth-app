@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              
+            }
+          }
+        }
+    </script>
+</head>
+
+<body class="flex items-center justify-center h-screen">
+    <div class="flex flex-col items-center justify-center h-[400px] shadow-2xl w-[400px] gap-4 p-10">
+        <input type="text" id="email" placeholder="Email" class="p-2 rounded-md border-2 border-gray-300 w-full">
+        <div class="w-full flex items-center justify-between gap-4 border-2 border-gray-300 rounded-md px-2">
+            <input type="password" id="password" placeholder="Password" class="p-2 rounded-md w-full">
+            <span class="cursor-pointer" id="togglePasswordVisibility">👁</span>
+        </div>
+        <p class="text-red-500 text-sm text-center" id="errorMessage"></p>
+        <button id="loginButton" class="bg-blue-500 text-white p-2 rounded-md">Login</button>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+        let loginButton = document.getElementById("loginButton");
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBLKQiLpi2j8kRp8NhDr-GwJzIYvY7E8uo",
+            authDomain: "for-test-51858.firebaseapp.com",
+            projectId: "for-test-51858",
+            storageBucket: "for-test-51858.appspot.com",
+            messagingSenderId: "593093187891",
+            appId: "1:593093187891:web:27af9fc88fb45c4c978646",
+            measurementId: "G-5CDGTSZTJ8",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Create user with email and password
+        loginButton.addEventListener("click", () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    // Successfully created user
+                    console.log("Successfully logged in");
+                    localStorage.setItem('userEmail', email);
+                    window.location.href = "index.html";
+                })
+                .catch((error) => {
+                    // Handle errors here
+                    document.body.innerHTML += `<p style="color: red;">Error</p>`;
+                });
+        });
+
+    </script>
+</body>
+
+</html>
